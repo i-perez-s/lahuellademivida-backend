@@ -3,7 +3,7 @@ const express = require('express')
 const oilsRouter = express.Router()
 const oilcontroller = require('../controllers/oils')
 const multipart = require('connect-multiparty')
-var multipartyMiddelware = multipart({uploadDir: './uploads'})
+var multipartyMiddelware = multipart({uploadDir: '../../uploads63'})
 
 
 
