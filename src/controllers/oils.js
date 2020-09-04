@@ -52,41 +52,7 @@ var controller = {
             return res.status(200).send({messages})
         })
     },
-    deleteMessage: async function(req, res) { // <= declaración tipo async
-        let id = req.params.id;
-        // cuando trabajamos con Promesas, debemos hacerlo dentro de bloques try/catch
-        try {
-          // borramos el documento
-          let oilDeleted = await Oil.findByIdAndRemove(id);
-          if (!oilDeleted) {
-            // si no existe el proyecto, finalizo toda la operación usando return
-            return res.status(404).send({message: 'no existe el proyecto solicitado a eliminar'});
-          }
-          // ahora intentamos eliminar el archivo
-          let pathToDelete ='../../uploads/' + oilDeleted.image;
-          console.log(pathToDelete)
-          let fileDeleted = await new Promise((resolve, reject) => {
-            fs.unlink(pathToDelete, (error) => {
-                if (error) return res.status(500).send({message: error})
-                return res.status(200).send({message: 'imagen borrada'}) // devuelvo true si se eliminó el archivo
-            });
-          });
-          // ahora podemos enviar el mensaje indicando que se eliminó el proyecto
-          // y además podemos enviar el valor de fileDeleted para saber si se eliminó el archivo
-          return res.status(200).send({
-            oilDeleted,
-            fileDeleted
-          });
-        } catch(error) {
-          // en esta parte manejamos cualquier error surgido en el bloque try
-          console.error(error.message);
-          return res.status(500).send({
-            error: 'Ocurrió un error durante la solicitud',
-            message: error.message
-          });
-        }
-      },
-    /*deleteMessage: function(req, res){
+    deleteMessage: function(req, res){
         var id = req.params.id
         Oil.findByIdAndRemove(id, (err, messageRemoved) => {
             if (err) return res.status(500).send({message: 'error al intentar eliminar proyecto'})
@@ -97,7 +63,7 @@ var controller = {
                 oil: messageRemoved
             })
         })
-    },*/
+    },
     getProject: function(req, res){
 		var projectId = req.params.id;
 
@@ -138,7 +104,7 @@ var controller = {
 
             if(fileExt == 'png' || fileExt == 'jpg' || fileExt == 'jpeg' || fileExt == 'gif' || fileExt == 'svg' || fileExt == 'JPG'){
                 Oil.findByIdAndUpdate(projectId, {image: fileName}, {new: true}, (err, projectUpdated) => {
-                    if (err) return res.status(500).send({message: 'error al intentar subir el archivo'})
+                    if (err) return res.status(500).send({message: 'error al intentar subir el archivo' + err})
 
                     if (!projectUpdated) return res.status(404).send({message: 'no existe el archivo'})
 
