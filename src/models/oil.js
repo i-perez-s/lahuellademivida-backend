@@ -7,7 +7,8 @@ const OilSchema = Schema({
     name: String,
     type: String,
     shortDescription: String,
-    description: String,
+    realName: String,
+    description: [],
     image: String
 
 })

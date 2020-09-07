@@ -17,6 +17,7 @@ var controller = {
         oil.type = params.type
         oil.shortDescription = params.shortDescription
         oil.description = params.description
+        oil.realName= params.realName
         oil.image = null
 
         oil.save((err, messageStorage) => {

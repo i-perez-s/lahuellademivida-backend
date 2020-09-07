@@ -3,7 +3,7 @@ const express = require('express')
 const oilsRouter = express.Router()
 const oilcontroller = require('../controllers/oils')
 const multipart = require('connect-multiparty')
-var multipartyMiddelware = multipart({uploadDir: '../../uploads63'})
+var multipartyMiddelware = multipart({uploadDir: './uploads'})
 
 
 
@@ -16,6 +16,7 @@ oilsRouter.get('/oil/getSimples/', oilcontroller.getSimples)
 oilsRouter.put('/oil/update-product/:id', oilcontroller.updateProject)
 oilsRouter.post('/oil/uploadImage/:id', multipartyMiddelware, oilcontroller.uploadFile)
 oilsRouter.get('/oil/getImage/:image', oilcontroller.getImageFile)
+
 
 
 module.exports = oilsRouter
